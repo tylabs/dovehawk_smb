@@ -8,7 +8,7 @@
 ####
 #### Run over a PCAP file:
 ####
-####.  zeek -Cr pcap/20171220_smb_psexec_mimikatz_ticket_dump.pcap smb
+####.  zeek -Cr pcap/20171220_smb_psexec_mimikatz_ticket_dump.pcap dovehawk_smb
 ####
 
 # Detects: - files with exe or ps1 extensions uploaded over SMB
