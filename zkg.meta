@@ -1,0 +1,5 @@
+[package]
+script_dir = .
+description = Dovehawk.io Malicious SMB Detection
+tags = intel, SMB
+version = 1.0
