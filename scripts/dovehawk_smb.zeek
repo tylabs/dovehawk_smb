@@ -26,6 +26,8 @@
 
 module dovehawk_smb;
 
+@load base/utils/site
+
 @load base/utils/directions-and-hosts
 
 @load-sigs ../signatures/responder.sig
