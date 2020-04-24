@@ -13,7 +13,7 @@ This module detects RPC execution, SMB uploads of executable files, and Responde
 
 ### DoveHawk dhsmb.log Local Log
 
-Coming Soon.
+Logs alerts locally.
 
 
 ## Requirements

@@ -46,8 +46,22 @@ redef ignore_checksums = T;
 export {
 	global DHSMB_VERSION = "1.0.0";
 
+	## The log ID.
+	redef enum Log::ID += { LOG };
+
+
 	global register_hit: function(hitvalue: string);
 
+	type Info: record {
+		## Timestamp of when the data was finalized.
+		ts:           time             &log;
+
+		## The top queries being performed.
+		ev:  string &log;
+
+
+	};
+	global log_smb: event(rec: Info);
 
 
 	# ATT&CK - Execution Techniques from
@@ -84,6 +98,14 @@ export {
 
 }
 
+event zeek_init()
+{
+	local rec: dovehawk_smb::Info;
+
+	print ("dovehawk_smb module started");
+	Log::create_stream(dovehawk_smb::LOG, [$columns=Info, $path="dhsmb", $ev=log_smb]);
+
+}
 
 
 function annotate_conn(conn: connection, msg: string, data: string): string {
@@ -396,29 +418,19 @@ function register_hit(hitvalue: string) {
 	$client_data=to_json(post_data),
 	$addl_curl_args = fmt("--header \"Content-Type: application/json\" --header \"Accept: application/json\"")
     ];
-
 	print "DoveHawk.io SMB Event: " + hitvalue;
-    when ( local resp = ActiveHTTP::request(request) ) {
+	Log::write(dovehawk_smb::LOG, [$ts=network_time(), $ev=hitvalue]);
+
+	when ( local resp = ActiveHTTP::request(request) ) {
 		
 		if (resp$code == 200) {
 			print fmt("Event Result ===> %s", resp$body);
 		} else {
 			print fmt("Event FAILED ===> %s", resp);
 		}
-    }
+	}
 	
 }
-
-
-
-
-event zeek_init()
-{
-	print ("dovehawk_smb module started");
-
-}
-
-
 
 
 function responder(state: signature_state, data: string): bool {
