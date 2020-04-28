@@ -22,12 +22,18 @@ If you are installing from Github, copy config.zeek.orig to config.zeek. To use 
 
 ![Dovehawk SMB Reports](https://dovehawk.io/images/dovehawk_exec.png "Dovehawk SMB")
 
+### Event On Remote Dashboard
+
+![Dovehawk Event](https://dovehawk.io/images/smb_hit.png "Dashboard Hit")
+
+
+
 
 ### DoveHawk dhsmb.log Local Log
 
 Logs alerts locally.
 
-
+![Dovehawk SMB Log](https://dovehawk.io/images/dhsmblog.png "Dashboard Log")
 
 ## Requirements
 
