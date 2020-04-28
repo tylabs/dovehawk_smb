@@ -1,4 +1,4 @@
-# Dovehawk.io SMB v1.0.0 2020 04 23 Copyright @tylabs 2020
+# Dovehawk.io SMB v1.0.1 2020 04 28 Copyright @tylabs 2020
 #
 # Inpired and code from https://github.com/mitre-attack/car/tree/master/implementations/bzar
 # under the Apache License 2.0
@@ -46,7 +46,7 @@ redef ignore_checksums = T;
 
 
 export {
-	global DHSMB_VERSION = "1.0.0";
+	global DHSMB_VERSION = "1.0.1";
 
 	## The log ID.
 	redef enum Log::ID += { LOG };
@@ -412,26 +412,28 @@ function register_hit(hitvalue: string) {
 	post_data["platform"] = "normal";
 	post_data["hcode"] = "ZEV";
 	post_data["hvalue"] = hitvalue;
-	
-	
-    local request: ActiveHTTP::Request = [
-        $url=upload_hit_url,
-	$method="POST",
-	$client_data=to_json(post_data),
-	$addl_curl_args = fmt("--header \"Content-Type: application/json\" --header \"Accept: application/json\"")
-    ];
-	print "DoveHawk.io SMB Event: " + hitvalue;
 	Log::write(dovehawk_smb::LOG, [$ts=network_time(), $ev=hitvalue]);
+	print "DoveHawk.io SMB Event: " + hitvalue;
 
-	when ( local resp = ActiveHTTP::request(request) ) {
+	#skip event send if settings are missing
+	if (upload_hit_url != "https://tool.cancyber.org/put/sightings?epstkey=**api key**&platform=smb&hcode=ZEV") {
+    		local request: ActiveHTTP::Request = [
+        		$url=upload_hit_url,
+			$method="POST",
+			$client_data=to_json(post_data),
+			$addl_curl_args = fmt("--header \"Content-Type: application/json\" --header \"Accept: application/json\"")
+    			];
+
+
+		when ( local resp = ActiveHTTP::request(request) ) {
 		
-		if (resp$code == 200) {
-			print fmt("Event Result ===> %s", resp$body);
-		} else {
-			print fmt("Event FAILED ===> %s", resp);
+			if (resp$code == 200) {
+				print fmt("Event Result ===> %s", resp$body);
+			} else {
+				print fmt("Event FAILED ===> %s", resp);
+			}
 		}
 	}
-	
 }
 
 
