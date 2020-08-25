@@ -416,7 +416,7 @@ function register_hit(hitvalue: string) {
 	print "DoveHawk.io SMB Event: " + hitvalue;
 
 	#skip event send if settings are missing
-	if (upload_hit_url != "https://tool.cancyber.org/put/sightings?epstkey=**api key**&platform=smb&hcode=ZEV") {
+	if (upload_hit_url != "https://tool.dovehawk,io/put/sightings?epstkey=**api key**&platform=smb&hcode=ZEV") {
     		local request: ActiveHTTP::Request = [
         		$url=upload_hit_url,
 			$method="POST",

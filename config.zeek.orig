@@ -2,6 +2,6 @@ module dovehawk_smb;
 
 export { 
 	global APIKEY = "**api key**";
-	global APIURL = fmt("https://tool.cancyber.org/put/sightings?epstkey=%s&platform=smb&hcode=ZEV", dovehawk_smb::APIKEY); 
+	global APIURL = fmt("https://tool.dovehawk.io/put/sightings?epstkey=%s&platform=smb&hcode=ZEV", dovehawk_smb::APIKEY); 
 
 }
